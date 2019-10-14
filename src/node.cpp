@@ -1,4 +1,5 @@
 #include "node.h"
+#include <exception>
 
 bool EmptyNode::Evaluate(const Date & date, const std::string & event)
 {
@@ -22,6 +23,8 @@ bool DateComparisonNode::Evaluate(const Date & date, const std::string & event)
         return date == date_;
     else if (cmp_ == Comparison::NotEqual)
         return date != date_;
+    else 
+        throw std::runtime_error("Bad comparision in DateComparisonNode");
 }
 
 
@@ -42,6 +45,8 @@ bool EventComparisonNode::Evaluate(const Date & date, const std::string & event)
         return event == event_;
     else if (cmp_ == Comparison::NotEqual)
         return event != event_;
+    else 
+        throw std::runtime_error("Bad comparision in EventComparisonNode");
 }
 
 LogicalOperationNode::LogicalOperationNode(LogicalOperation lo, std::shared_ptr<Node> left, std::shared_ptr<Node> right)
